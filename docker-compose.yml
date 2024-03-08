@@ -1,0 +1,37 @@
+services:
+  account:
+    image: knlkshyp/account
+    container_name: account-container
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - dckrcntnr
+  card:
+    image: knlkshyp/card
+    container_name: card-container
+    ports:
+      - "8070:8070"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - dckrcntnr
+  loan:
+    image: knlkshyp/loan
+    container_name: loan-container
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - dckrcntnr
+networks:
+  dckrcntnr:
+    driver: "bridge"
