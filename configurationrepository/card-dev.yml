@@ -1,6 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:db
+    username: card-username
+    password: card-password
   jpa:
     defer-datasource-initialization: true
   h2:

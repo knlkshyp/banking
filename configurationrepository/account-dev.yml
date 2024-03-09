@@ -1,6 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:db
+    username: account-username
+    password: account-password
   jpa:
     defer-datasource-initialization: true
   h2:
