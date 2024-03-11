@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:db
     username: card-user
-    password: {cipher}cac02bb10f912f342da08791111e54a7ba7f672f36ca070e576e3dfe7a628960
+    password: "{cipher}cac02bb10f912f342da08791111e54a7ba7f672f36ca070e576e3dfe7a628960"
   jpa:
     defer-datasource-initialization: true
   h2:
