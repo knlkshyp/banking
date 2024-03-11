@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:db
-    username: loan-username
-    password: 110e8c29434b68c67fd132c222e28ae42d4d7a74f3b9845eb272234a08e8682e
+    username: loan-user
+    password: {cipher}110e8c29434b68c67fd132c222e28ae42d4d7a74f3b9845eb272234a08e8682e
   jpa:
     defer-datasource-initialization: true
   h2:
