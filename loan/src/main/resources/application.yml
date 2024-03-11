@@ -10,11 +10,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-    cloud:
-      bus:
-        enabled: true
-        refresh:
-          enabled: true
 
 management:
   endpoints:
