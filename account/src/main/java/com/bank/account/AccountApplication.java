@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @OpenAPIDefinition(
@@ -30,6 +31,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 		)
 )
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+@RefreshScope
 @SpringBootApplication
 public class AccountApplication {
 

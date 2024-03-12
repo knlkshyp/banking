@@ -1,10 +1,5 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:db
-    username: account-user
+    url: jdbc:mysql://localhost:3306/accountdb
+    username: root
     password: "{cipher}1175ccc64bb0ef2a5f6a52ce5e15b1acf876f1bed234a84498caa615c81983916137d9eb3a99a423dea4753364cecf2d"
-  jpa:
-    defer-datasource-initialization: true
-  h2:
-    console:
-      enabled: true
