@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: eureka-server
+  config:
+    import: optional:configserver:http://localhost:8060
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh
