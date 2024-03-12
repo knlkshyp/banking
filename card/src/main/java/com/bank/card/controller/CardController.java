@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 )
 @Validated
 @RestController
-@RequestMapping(path = "api/v1/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "api/v1/card", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CardController {
 
