@@ -20,10 +20,10 @@ eureka:
       defaultZone: http://localhost:8050/eureka
 
 management:
-  endpoint:
-    gateway:
-      enabled: true
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    gateway:
+      enabled: true
