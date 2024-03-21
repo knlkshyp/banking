@@ -27,3 +27,9 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+logging:
+  level:
+    com:
+      bank:
+        gatewayserver: DEBUG

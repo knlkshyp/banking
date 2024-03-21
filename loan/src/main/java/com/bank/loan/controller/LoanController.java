@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import java.util.List;
         name = "REST APIs for Account microservices",
         description = "REST APIs to CREATE, READ, UPDATE and DELETE account details"
 )
+@Slf4j
 @Validated
 @RestController
 @RequestMapping(value = "api/v1/loan", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +83,9 @@ public class LoanController {
             )
     })
     @GetMapping(value = "/fetch")
-    public ResponseEntity<LoanDto> fetchLoan(@RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
+    public ResponseEntity<LoanDto> fetchLoan(@RequestHeader(LoanConstants.CORRELATION_ID) String correlationId,
+                                             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
+        log.debug("Loan controller found correlation id : {}", correlationId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(loanService.fetchLoan(mobileNumber));

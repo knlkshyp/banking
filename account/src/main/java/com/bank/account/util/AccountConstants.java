@@ -14,4 +14,6 @@ public class AccountConstants {
     public static final String STATUS_EXPECTATION_FAILED = "417";
     public static final String MESSAGE_EXPECTATION_FAILED_UPDATE = "Update operation failed";
     public static final String MESSAGE_EXPECTATION_FAILED_DELETE = "Delete operation failed";
+
+    public static final String CORRELATION_ID = "bank-correlation-id";
 }

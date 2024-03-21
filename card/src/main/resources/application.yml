@@ -32,3 +32,9 @@ management:
 endpoints:
   shutdown:
     enabled: true
+
+logging:
+  level:
+    com:
+      bank:
+        card: DEBUG

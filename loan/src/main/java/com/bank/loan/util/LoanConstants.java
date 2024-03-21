@@ -14,4 +14,6 @@ public class LoanConstants {
 
     public static final String HOME_LOAN = "Home Loan";
     public static final long LOAN_LIMIT = 3_000_000;
+
+    public static final String CORRELATION_ID = "bank-correlation-id";
 }

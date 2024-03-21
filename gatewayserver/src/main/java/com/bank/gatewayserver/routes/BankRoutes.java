@@ -1,4 +1,4 @@
-package com.bank.gatewayserver.config;
+package com.bank.gatewayserver.routes;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDateTime;
 
 @Configuration
-public class RouteLocatorConfig {
+public class BankRoutes {
 
     @Bean
-    public RouteLocator routeConfig(RouteLocatorBuilder routeLocatorBuilder) {
+    public RouteLocator routeLocatorBean(RouteLocatorBuilder routeLocatorBuilder) {
         return routeLocatorBuilder.routes()
                 .route(path -> path.path("/bank/account/**")
                         .filters(filter -> filter.rewritePath("/bank/account/(?<segment>.*)", "/${segment}")
