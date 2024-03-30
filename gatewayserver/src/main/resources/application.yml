@@ -8,7 +8,6 @@ spring:
       discovery:
         locator:
           enabled: false
-#          lowerCaseServiceId: true
 
 eureka:
   instance:
@@ -33,3 +32,11 @@ logging:
     com:
       bank:
         gatewayserver: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
