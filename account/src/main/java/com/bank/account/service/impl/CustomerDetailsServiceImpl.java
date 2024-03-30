@@ -17,6 +17,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @AllArgsConstructor
 public class CustomerDetailsServiceImpl implements CustomerDetailsService {
@@ -38,9 +40,13 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer);
         customerDetailsDto.setAccountDto(AccountMapper.mapToAccountDto(account));
         ResponseEntity<CardDto> cardDtoResponseEntity = cardFeignClient.fetchCard(correlationId, mobileNumber);
+        if (Objects.nonNull(cardDtoResponseEntity))  {
+            customerDetailsDto.setCardDto(cardDtoResponseEntity.getBody());
+        }
         ResponseEntity<LoanDto> loanDtoResponseEntity = loanFeignClient.fetchLoan(correlationId, mobileNumber);
-        customerDetailsDto.setCardDto(cardDtoResponseEntity.getBody());
-        customerDetailsDto.setLoanDto(loanDtoResponseEntity.getBody());
+        if (Objects.nonNull(loanDtoResponseEntity))  {
+            customerDetailsDto.setLoanDto(loanDtoResponseEntity.getBody());
+        }
         return customerDetailsDto;
     }
 }
