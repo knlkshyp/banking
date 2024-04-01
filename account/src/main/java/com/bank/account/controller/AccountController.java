@@ -5,6 +5,7 @@ import com.bank.account.dto.ErrorResponseDto;
 import com.bank.account.dto.ResponseDto;
 import com.bank.account.service.AccountService;
 import com.bank.account.util.AccountConstants;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -78,11 +79,19 @@ public class AccountController {
                     )
             )
     })
+    @Retry(name = "fetchAccount", fallbackMethod = "fetchAccountFallback")
     public ResponseEntity<CustomerDto> fetchAccount(@RequestParam @Pattern(regexp = "(^$|[0-9]{10})",
             message = "Mobile number must be 10 numeric digits") String mobileNumber) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(accountService.fetchAccount(mobileNumber));
+    }
+
+    public ResponseEntity<CustomerDto> fetchAccountFallback(@RequestParam @Pattern(regexp = "(^$|[0-9]{10})",
+            message = "Mobile number must be 10 numeric digits") String mobileNumber, Throwable throwable) {
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(null);
     }
 
     @Operation(
