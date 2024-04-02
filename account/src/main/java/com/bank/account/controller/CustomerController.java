@@ -4,6 +4,7 @@ import com.bank.account.dto.CustomerDto;
 import com.bank.account.dto.ErrorResponseDto;
 import com.bank.account.service.CustomerService;
 import com.bank.account.util.AccountConstants;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,6 +52,7 @@ public class CustomerController {
                     )
             )
     })
+    @RateLimiter(name = "fetchCustomer", fallbackMethod = "fetchCustomerFallback")
     public ResponseEntity<CustomerDto> fetchCustomer(@RequestHeader(AccountConstants.CORRELATION_ID) String correlationId,
                                                     @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",
             message = "Mobile number must be 10 numeric digits") String mobileNumber) {
@@ -58,5 +60,14 @@ public class CustomerController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.fetchCustomer(mobileNumber, correlationId));
+    }
+
+    public ResponseEntity<CustomerDto> fetchCustomerFallback(@RequestHeader(AccountConstants.CORRELATION_ID) String correlationId,
+                                                             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",
+                                                                     message = "Mobile number must be 10 numeric digits") String mobileNumber,
+                                                             Throwable throwable) {
+        return ResponseEntity
+                .status(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED)
+                .body(null);
     }
 }
