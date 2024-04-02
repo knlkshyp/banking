@@ -10,8 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Schema(
-        name = "Customer",
-        description = "Schema for customer"
+        name = "CustomerDetails",
+        description = "Schema for customer account, card and loan details"
 )
 @Getter
 @Setter
@@ -48,4 +48,14 @@ public class CustomerDto {
             description = "Account of the customer"
     )
     private AccountDto accountDto;
+
+    @Schema(
+            description = "Card of the customer"
+    )
+    private CardDto cardDto;
+
+    @Schema(
+            description = "Loan of the customer"
+    )
+    private LoanDto loanDto;
 }
