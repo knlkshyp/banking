@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: message
+  cloud:
+    function:
+      definition: fetchAccountMessage|fetchAccountNumber
+
+server:
+  port: 8030
+
