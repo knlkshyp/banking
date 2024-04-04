@@ -4,6 +4,17 @@ spring:
   cloud:
     function:
       definition: fetchAccountMessage|fetchAccountNumber
+    stream:
+      bindings:
+        fetchAccountMessagefetchAccountNumber-in-0:
+          destination: account-message
+          group: ${spring.application.name}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    connection-timeout: 10s
 
 server:
   port: 8030
