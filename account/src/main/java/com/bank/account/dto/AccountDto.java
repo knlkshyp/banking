@@ -17,13 +17,6 @@ import lombok.Setter;
 public class AccountDto {
 
     @Schema(
-            description = "Account number of customer", example = "8570093691"
-    )
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Account number must be 10 digits")
-    @NotEmpty
-    private Long accountNumber;
-
-    @Schema(
             description = "Account type of customer", example = "Savings"
     )
     @NotEmpty(message = "Account type cannot be null or empty")
