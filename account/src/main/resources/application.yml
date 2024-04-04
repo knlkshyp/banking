@@ -5,15 +5,20 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:8060
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+    stream:
+      bindings:
+        sendAccountMessage-out-0:
+          destination: account-message
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
+    connection-timeout: 10s
 
 eureka:
   instance:

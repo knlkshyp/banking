@@ -1,6 +1,7 @@
 package com.bank.account.service.impl;
 
 import com.bank.account.dto.AccountDto;
+import com.bank.account.dto.AccountMessageDto;
 import com.bank.account.dto.CustomerDto;
 import com.bank.account.entity.Account;
 import com.bank.account.entity.Customer;
@@ -13,11 +14,14 @@ import com.bank.account.repository.CustomerRepository;
 import com.bank.account.service.AccountService;
 import com.bank.account.util.AccountConstants;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Random;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -25,6 +29,10 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     private CustomerRepository customerRepository;
+
+    private StreamBridge streamBridge;
+
+    private static final String BINDING_NAME = "sendAccountMessage-out-0";
 
     @Override
     public void createAccount(CustomerDto customerDto) {
@@ -34,7 +42,8 @@ public class AccountServiceImpl implements AccountService {
         }
         Customer customer = CustomerMapper.mapToCustomer(customerDto);
         Customer savedCustomer = customerRepository.save(customer);
-        accountRepository.save(initialiseAccount(savedCustomer));
+        Account savedAccount = accountRepository.save(initialiseAccount(savedCustomer));
+        sendAccountMessage(savedAccount, savedCustomer);
     }
 
     @Override
@@ -83,5 +92,13 @@ public class AccountServiceImpl implements AccountService {
                 .accountType(AccountConstants.SAVINGS)
                 .branchAddress(AccountConstants.BRANCH_ADDRESS)
                 .build();
+    }
+
+    private void sendAccountMessage(Account account, Customer customer) {
+        var accountMessageDto = new AccountMessageDto(account.getAccountNumber(), customer.getCustomerName(),
+                customer.getEmailId(), customer.getMobileNumber());
+        log.info("Sending account message {}", accountMessageDto);
+        var result = streamBridge.send(BINDING_NAME, accountMessageDto);
+        log.info("Request send successfully : {}", result);
     }
 }

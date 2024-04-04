@@ -14,7 +14,7 @@ public class MessageFunction {
     @Bean
     public Function<AccountMessageDto, AccountMessageDto> fetchAccountMessage() {
         return accountMessageDto -> {
-            log.info("Received account message : " + accountMessageDto.toString());
+            log.info("Received account message : {}", accountMessageDto.toString());
             return accountMessageDto;
         };
     }
@@ -22,7 +22,7 @@ public class MessageFunction {
     @Bean
     public Function<AccountMessageDto, Long> fetchAccountNumber() {
         return accountMessageDto -> {
-            log.info("Sending account number : " + accountMessageDto.accountNumber());
+            log.info("Sending account number : {}", accountMessageDto.accountNumber());
             return accountMessageDto.accountNumber();
         };
     }
