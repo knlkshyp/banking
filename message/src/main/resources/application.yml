@@ -9,6 +9,8 @@ spring:
         fetchAccountMessagefetchAccountNumber-in-0:
           destination: account-message
           group: ${spring.application.name}
+        fetchAccountMessagefetchAccountNumber-out-0:
+          destination: acknowledgement-message
   rabbitmq:
     host: localhost
     port: 5672
