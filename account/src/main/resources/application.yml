@@ -9,10 +9,15 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+    function:
+      definition: updateAcknowledgement
     stream:
       bindings:
         sendAccountMessage-out-0:
           destination: account-message
+        updateAcknowledgement-in-0:
+          destination: acknowledgement-message
+          group: ${spring.application.name}
   rabbitmq:
     host: localhost
     port: 5672

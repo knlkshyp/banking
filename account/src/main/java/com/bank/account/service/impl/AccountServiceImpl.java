@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -100,5 +101,19 @@ public class AccountServiceImpl implements AccountService {
         log.info("Sending account message {}", accountMessageDto);
         var result = streamBridge.send(BINDING_NAME, accountMessageDto);
         log.info("Request send successfully : {}", result);
+    }
+
+    @Override
+    public boolean updateAcknowledgement(Long accountNumber) {
+        boolean isUpdated = false;
+        if (Objects.nonNull(accountNumber)) {
+            var account = accountRepository.findById(accountNumber).orElseThrow(() ->
+                    new ResourceNotFoundException("Account", "Account Number", accountNumber.toString())
+            );
+            account.setAcknowledgement(true);
+            accountRepository.save(account);
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 }
